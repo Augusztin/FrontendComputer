@@ -32,32 +32,50 @@ const powerSupplies = [
     { name: "850W Platinum", price: 58000 }
 ];
 
+// AI-okosság:
+const getImageUrl = (name) => {
+    return new URL(`./assets/${name}.png`, import.meta.url).href;
+};
+
 const ComponentSelector = ({ name, options, selectedOption, onSelect }) => {
     return (
-        <>
-        <div
-        style={{margin: "20px", padding: "5px"}}
-        >
+        <div style={{ marginTop: "30px"}}>
             <h3>{name}</h3>
-            {options.map((option, index) => (
-                <button
-                    key={index}
-                    onClick={() => onSelect(option)}
-                    style={{
-                        backgroundColor:
-                            selectedOption?.name === option.name ? "green" : "lightgrey",
-                        color: selectedOption?.name === option.name ? "white" : "black",
-                        margin: "5px",
-                        padding: "10px",
-                        borderRadius: "5px",
-                        cursor: "pointer"
-                    }}
-                >
-                    {option.name} - {option.price} HUF
-                </button>
-            ))}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", justifyContent: "center" }}>
+                {options.map((option, index) => (
+                    <button
+                        key={index}
+                        onClick={() => onSelect(option)}
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            backgroundColor:
+                                selectedOption?.name === option.name ? "green" : "lightgrey",
+                            color: selectedOption?.name === option.name ? "white" : "black",
+                            padding: "10px",
+                            borderRadius: "8px",
+                            border: "none",
+                            cursor: "pointer"
+                        }}
+                    >
+                        <img
+                            src={getImageUrl(option.name)}
+                            alt={option.name}
+                            style={{
+                                width: "120px",
+                                height: "120px",
+                                objectFit: "cover",
+                                borderRadius: "4px",
+                                marginBottom: "8px"
+                            }}
+                        />
+                        <span>{option.name}</span>
+                        <strong>{option.price.toLocaleString()} HUF</strong>
+                    </button>
+                ))}
+            </div>
         </div>
-        </>
     );
 };
 
